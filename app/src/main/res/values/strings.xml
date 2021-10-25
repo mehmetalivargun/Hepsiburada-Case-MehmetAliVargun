@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Hepsiburada-Case-MehmetAliVargun</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="books">Books</string>
+    <string name="apps">Apps</string>
+    <string name="music">Music</string>
+    <string name="movies">Movies</string>
 </resources>
