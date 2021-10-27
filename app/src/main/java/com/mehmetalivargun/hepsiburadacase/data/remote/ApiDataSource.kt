@@ -10,7 +10,7 @@ class ApiDataSource @Inject constructor(private val api:ITunesService) {
     suspend fun  search(query:String,entity:String) = flow<Any>{
       emit(Loading)
        val response=try {
-           api.search(query,entity)
+           api.search(query,entity,20,10)
        }catch (ex: Exception){
            null
        }

@@ -9,6 +9,6 @@ interface ITunesService {
 
     @GET("search")
     suspend fun search(@Query("term") term:String,
-                       @Query("entity") entity:String?): Response<SearchResponse>
+                       @Query("entity") entity:String?,@Query("offset") offset:Int,@Query("limit") limit :Int): Response<SearchResponse>
 
 }
