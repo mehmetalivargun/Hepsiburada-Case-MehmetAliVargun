@@ -11,5 +11,10 @@
     <color name="gray_light">#AAAAAA</color>
     <color name="gray_dark">#474747</color>
     <color name="bg_color">#474747</color>
+    <color name="byzantium">#6b2d5c</color>
+    <color name="paradise_pink">#f0386b</color>
+    <color name="pink">#f8c0c8</color>
+    <color name="prussian_blue">#13293d</color>
+    <color name="green_blue">#3e92cc</color>
     <color name="colorPrimary">#2196F3</color>
 </resources>

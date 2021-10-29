@@ -7,20 +7,20 @@ import com.mehmetalivargun.hepsiburadacase.R
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun String?.getDate(context: Context):String
-{
+fun String?.getDate(): String {
     this?.apply {
         val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
         val parsedDate = sdf.parse(this)
         val systemSdp = SimpleDateFormat("d MMMM yyyy", Locale.ENGLISH)
-        val formattedDate=systemSdp.format(parsedDate)
-        return formattedDate
+        return systemSdp.format(parsedDate)
     }
 
-    return  ""
+    return ""
 }
 
 fun ImageView.load(imgUrl: String) {
+    if (imgUrl.isEmpty())
+        return
     Glide.with(context)
         .load(imgUrl)
         .into(this)

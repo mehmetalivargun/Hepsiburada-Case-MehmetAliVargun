@@ -10,7 +10,7 @@ import androidx.viewbinding.ViewBinding
 
 typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
-abstract class BaseFragment<VB : ViewBinding>(
+abstract class BaseFragment <VB : ViewBinding>(
     private val inflate: Inflate<VB>
 ) : Fragment() {
     private var _binding: VB? = null
@@ -18,14 +18,18 @@ abstract class BaseFragment<VB : ViewBinding>(
 
     open fun VB.initialize(){}
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.initialize()
+        super.onViewCreated(view, savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = inflate.invoke(inflater, container, false)
-
-        binding.initialize()
+        setHasOptionsMenu(true)
         return binding.root
     }
 

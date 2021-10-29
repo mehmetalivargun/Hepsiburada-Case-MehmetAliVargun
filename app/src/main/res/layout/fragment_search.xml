@@ -6,14 +6,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.search.SearchFragment">
 
+
     <RadioGroup
         android:id="@+id/filterRadioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:checkedButton="@+id/moviesRadioBtn"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="16dp"
-        android:checkedButton="@+id/moviesRadioBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -70,28 +71,19 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/resultsRV"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:listitem="@layout/item_search"
-        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-        app:spanCount="2"
-        app:layout_constraintTop_toBottomOf="@+id/filterRadioGroup">
-
-    </androidx.recyclerview.widget.RecyclerView>
-    <TextView
-        android:id="@+id/emojiTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="42sp"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/filterRadioGroup"
-        tools:text="😄" />
+        app:spanCount="2"
+        tools:listitem="@layout/item_search">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

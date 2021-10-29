@@ -3,23 +3,24 @@ package com.mehmetalivargun.hepsiburadacase.data.paging
 import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.mehmetalivargun.hepsiburadacase.data.model.SearchTrackItem
-import com.mehmetalivargun.hepsiburadacase.data.model.mapper.toSearchResultItemResponse
+import com.mehmetalivargun.hepsiburadacase.data.model.SearchSoftwareItem
+import com.mehmetalivargun.hepsiburadacase.data.model.mapper.toSearchAppResponseList
 import com.mehmetalivargun.hepsiburadacase.data.remote.ITunesService
 import com.mehmetalivargun.hepsiburadacase.util.constants.Constants.INITIAL_LOAD_SIZE
 import com.mehmetalivargun.hepsiburadacase.util.constants.Constants.NETWORK_PAGE_SIZE
 import java.lang.Exception
 
 
-class SearchResultPagingDataSource(private val service : ITunesService , private val term:String, private val entity:String) : PagingSource<Int,SearchTrackItem>(){
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, SearchTrackItem> {
+class SearchSoftwarePagingDataSource(private val service : ITunesService, private val term:String) : PagingSource<Int, SearchSoftwareItem>(){
+
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, SearchSoftwareItem> {
         // using offset and limit parameters for pagination
         val position = params.key ?: INITIAL_LOAD_SIZE
         val offset = if (params.key != null) ((position-1 ) * NETWORK_PAGE_SIZE) + 1 else INITIAL_LOAD_SIZE
 
         return try {
-            val jsonResponse = service.search(term = term,entity = entity,offset = offset,limit = params.loadSize).body()?.results
-            val mappedResponse = jsonResponse.toSearchResultItemResponse()
+            val jsonResponse = service.searchApps(term = term,offset = offset,limit = params.loadSize).body()?.results
+            val mappedResponse = jsonResponse.toSearchAppResponseList()
             val next= if(mappedResponse?.isEmpty()!!){
                 null
             }else{
@@ -33,11 +34,11 @@ class SearchResultPagingDataSource(private val service : ITunesService , private
                 nextKey =next
             )
         }catch (e : Exception){
-                LoadResult.Error(e)
+            LoadResult.Error(e)
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, SearchTrackItem>): Int?{
+    override fun getRefreshKey(state: PagingState<Int, SearchSoftwareItem>): Int?{
         return null
     }
 }

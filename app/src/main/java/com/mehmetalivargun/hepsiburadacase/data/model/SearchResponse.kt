@@ -1,6 +1,6 @@
 package com.mehmetalivargun.hepsiburadacase.data.model
 
-data class SearchResponse(
+data class SearchResponse<T>(
     val resultCount: Int,
-    val results: List<Result>
+    val results: List<T> = listOf()
 )

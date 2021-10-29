@@ -9,5 +9,24 @@
         android:id="@+id/searchFragment"
         android:name="com.mehmetalivargun.hepsiburadacase.ui.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.mehmetalivargun.hepsiburadacase.ui.detail.DetailFragment"
+        android:label="DetailFragment" >
+        <argument
+            android:name="searchSoftwareArgument"
+            android:defaultValue="@null"
+            app:argType="com.mehmetalivargun.hepsiburadacase.data.model.SearchSoftwareItem"
+            app:nullable="true"/>
+        <argument
+            android:name="searchTracktArgument"
+            android:defaultValue="@null"
+            app:argType="com.mehmetalivargun.hepsiburadacase.data.model.SearchTrackItem"
+            app:nullable="true"/>
+    </fragment>
 </navigation>
