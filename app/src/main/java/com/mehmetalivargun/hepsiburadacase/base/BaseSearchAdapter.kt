@@ -38,7 +38,7 @@ abstract class BaseSearchAdapter<T : Any>  constructor(diffUtil: DiffUtil.ItemCa
             when(item){
                 is SearchTrackItem ->{
                     item.artworkUrl100?.let { artWork.load(it) }
-                    collectionName.text=item.trackName
+                   collectionName.text=item.trackName
                     releaseDate.text=item.releaseDate.getDate()
                     collectionPrice.text="$ "+ if(item.kind==EntityType.BOOKS.value.enumValue) item.price.toString() else item.collectionPrice.toString()
                 }

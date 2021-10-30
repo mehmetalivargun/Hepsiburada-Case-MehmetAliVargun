@@ -1,13 +1,16 @@
 package com.mehmetalivargun.hepsiburadacase.ui.search
 
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import com.mehmetalivargun.hepsiburadacase.R
 import com.mehmetalivargun.hepsiburadacase.base.BaseFragment
 import com.mehmetalivargun.hepsiburadacase.databinding.FragmentSearchBinding
@@ -32,7 +35,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
                     doSearch()
                     return true
                 }
-
                 override fun onQueryTextChange(query: String?): Boolean {
                     searchQuery = query
                     doSearch()
@@ -68,8 +70,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     }
 
     override fun FragmentSearchBinding.initialize() {
+        setupAdapters()
         setAdapterClickListener()
-        binding.resultsRV.adapter = searchAdapter
         binding.filterRadioGroup.setOnCheckedChangeListener { radioGroup, i ->
             val selected = radioGroup.findViewById<RadioButton>(i).text
             selectedEntityType = EntityType.getEntitiyBySelected(selected.toString())!!
@@ -95,7 +97,29 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
             }
         }
     }
+    private fun setupAdapters(){
+        searchAdapter.addLoadStateListener {loadState->
+            if (loadState.refresh is LoadState.Loading){
+                binding.apply {
+                    loadingBar.visibility= View.VISIBLE
+                    resultsRV.visibility=View.GONE
+                }
+            }
+            else{
+                binding.apply {
+                    loadingBar.visibility= View.GONE
+                    resultsRV.visibility=View.VISIBLE
+                }
+            }
 
+            val error = when {
+                loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
+                loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+                loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+                else -> null
+            }
+        }
+    }
     private fun setupRecyclerViewTrack() {
 
         with(binding) {
@@ -120,15 +144,15 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         searchAdapter.setOnItemClickListener {
             findNavController().navigate(
                 SearchFragmentDirections.actionSearchFragmentToDetailFragment(
-                    null,
-                    it
+                    it.kind,
+                    it.trackId
                 )
             )
         }
         softwareAdapter.setOnItemClickListener {
             findNavController().navigate(
                 SearchFragmentDirections.actionSearchFragmentToDetailFragment(
-                    it, null
+                    it.kind, it.trackId
                 )
             )
         }

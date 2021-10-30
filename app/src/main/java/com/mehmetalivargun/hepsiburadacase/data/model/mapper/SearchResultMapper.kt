@@ -13,14 +13,15 @@ import com.mehmetalivargun.hepsiburadacase.data.model.SearchTrackItem
     }
 
     private fun AppResult.toSearchSoftwareItem()= SearchSoftwareItem(
-        trackId = trackId,
+        trackId = trackId!!,
         trackName = trackName,
         price = price,
         releaseDate = releaseDate,
         description = description,
         artworkUrl100 = artworkUrl100,
         primaryGenreName = primaryGenreName,
-        sellerName = sellerName
+        sellerName = sellerName,
+        kind=kind
 
     )
 
@@ -33,7 +34,10 @@ import com.mehmetalivargun.hepsiburadacase.data.model.SearchTrackItem
         collectionPrice = collectionPrice,
         releaseDate = releaseDate,
         kind = kind,
-        price = price
+        price = price,
+        previewUrl = previewUrl,
+        trackId = trackId!!
+
 
 
     )

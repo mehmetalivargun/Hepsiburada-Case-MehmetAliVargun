@@ -19,14 +19,14 @@
         android:name="com.mehmetalivargun.hepsiburadacase.ui.detail.DetailFragment"
         android:label="DetailFragment" >
         <argument
-            android:name="searchSoftwareArgument"
+            android:name="kind"
             android:defaultValue="@null"
-            app:argType="com.mehmetalivargun.hepsiburadacase.data.model.SearchSoftwareItem"
+            app:argType="string"
             app:nullable="true"/>
         <argument
-            android:name="searchTracktArgument"
-            android:defaultValue="@null"
-            app:argType="com.mehmetalivargun.hepsiburadacase.data.model.SearchTrackItem"
-            app:nullable="true"/>
+            android:name="id"
+            android:defaultValue="-1"
+            app:argType="integer"
+           />
     </fragment>
 </navigation>

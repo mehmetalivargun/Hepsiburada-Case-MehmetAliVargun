@@ -18,6 +18,7 @@ class SearchViewModel @Inject constructor(private val repository: SearchReposito
     private val _searchSoftwareResults = MutableLiveData<PagingData<SearchSoftwareItem>>()
 
 
+
      fun search(entityType: EntityType,term:String): LiveData<PagingData<SearchTrackItem>> {
         val result = repository.search(term,entityType).cachedIn(viewModelScope)
         _searchResults.value = result.value
