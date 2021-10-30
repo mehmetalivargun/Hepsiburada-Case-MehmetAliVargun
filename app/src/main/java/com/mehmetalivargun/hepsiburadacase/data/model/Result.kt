@@ -20,6 +20,7 @@ data class Result(
     val contentAdvisoryRating: String?,
     val country: String?,
     val currency: String?,
+    val description:String?,
     val discCount: Int?,
     val discNumber: Int?,
     val hasITunesExtras: Boolean?,

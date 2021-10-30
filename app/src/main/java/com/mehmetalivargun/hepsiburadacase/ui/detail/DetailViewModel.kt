@@ -30,7 +30,7 @@ class DetailViewModel @Inject constructor(
 
     init {
         val id: Int? = savedStateHandle["id"]
-        val kind:String? =savedStateHandle["kind"]
+        val kind: String? = savedStateHandle["kind"]
 
         when (kind) {
             "software" -> id?.let { lookupSoftware(it) }
@@ -40,7 +40,7 @@ class DetailViewModel @Inject constructor(
 
     private fun lookup(id: Int) = viewModelScope.launch {
         repository.lookup(id).collect {
-            Log.e("Result","lookUp")
+            Log.e("Result", "lookUp")
             when (it) {
                 is DetailRepository.LookupResponseResult.Success -> onSuccesResult(it.data)
                 DetailRepository.LookupResponseResult.Failure -> onFail()
@@ -49,8 +49,6 @@ class DetailViewModel @Inject constructor(
             }
         }
     }
-
-
 
 
     private fun onLoading() {
@@ -65,24 +63,22 @@ class DetailViewModel @Inject constructor(
     private fun lookupSoftware(id: Int) = viewModelScope.launch {
         repository.lookupSoftware(id).collect {
             when (it) {
-                is DetailRepository.LookupSoftwareResponseResult.Success ->onSuccesAppResult(it.data)
+                is DetailRepository.LookupSoftwareResponseResult.Success -> onSuccesAppResult(it.data)
                 DetailRepository.LookupSoftwareResponseResult.Failure -> onFail()
                 DetailRepository.LookupSoftwareResponseResult.Loading -> onLoading()
             }
         }
     }
 
-    private fun onSuccesAppResult(data : AppResult){
-          _softwareResult.value=data
-        _isLoading.value = false
-    }
-    private fun onSuccesResult(data : Result){
-        _result.value=data
+    private fun onSuccesAppResult(data: AppResult) {
+        _softwareResult.value = data
         _isLoading.value = false
     }
 
-
-
+    private fun onSuccesResult(data: Result) {
+        _result.value = data
+        _isLoading.value = false
+    }
 
 
 }

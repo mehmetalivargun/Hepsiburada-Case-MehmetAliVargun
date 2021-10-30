@@ -7,12 +7,12 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
         android:elevation="10dp"
         app:cardCornerRadius="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -27,15 +27,16 @@
 
     <TextView
         android:id="@+id/songName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:padding="10dp"
+        android:layout_marginTop="24dp"
+        android:maxLines="2"
+        android:padding="8dp"
         android:textAlignment="center"
         android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="@+id/cardView"
-        app:layout_constraintStart_toStartOf="@+id/cardView"
-        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cardView"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Allame">
 
     </TextView>
@@ -46,8 +47,8 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/cardView"
-        app:layout_constraintStart_toStartOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="@+id/songName"
+        app:layout_constraintStart_toStartOf="@+id/songName"
         app:layout_constraintTop_toBottomOf="@+id/songName"
         tools:text="Collection:87">
 
@@ -59,13 +60,36 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/cardView"
-        app:layout_constraintStart_toStartOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="@+id/songName"
+        app:layout_constraintStart_toStartOf="@+id/songName"
         app:layout_constraintTop_toBottomOf="@+id/collectionName"
         tools:text="Release: 2021">
 
     </TextView>
 
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="4"
+        android:padding="10dp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/screenShotRV"
+        app:layout_constraintTop_toBottomOf="@+id/openTrackviewUrl"
+        tools:text="Burner is the market-leading private phone number app — a second line for calling, texting, and picture messaging in everyday situations. Did you know that your personal info is attached to your phone number and easily searchable online? Every time you give out your real phone number, you risk exposing your personal information. Only give your number to people you trust. For everyone else, there's Burner.\n\nHOW BURNER WORKS\nWith Burner, you're in control of your personal information. No one can find your real number from your Burner number. We intercept calls on your Burner and route them to your cell phone so no one can see your real number. Since you can call, text, and manage your contacts from within the app, you don't have to carry a second device.\n\nUse Burner for everyday situations. Create a disposable phone number for dating, salespeople, deliveries, shopping online or selling items on Craigslist. You can use it as a longterm second phone number for your business or side projects. Integrations with Dropbox, Google Drive, and Slack allow you to archive messages and voicemails, and communicate with your team. Create multiple numbers, keep them as long as you want, or burn them anytime. Share your Burner with anyone and everyone, or keep your new number secret for anonymous texting. No hassles, no contracts." />
+
+
+    <Button
+        android:id="@+id/openTrackviewUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_margin="8dp"
+        android:text="@string/install"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/releaseDate" />
 
     <com.wnafee.vector.MorphButton
         android:id="@+id/playPreview"
@@ -91,6 +115,20 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/releaseDate" />
+        app:layout_constraintTop_toBottomOf="@+id/description" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/screenShotRV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/playPreview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/releaseDate"
+        tools:listitem="@layout/item_screen_shot" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

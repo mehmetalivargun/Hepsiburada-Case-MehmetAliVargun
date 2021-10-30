@@ -9,43 +9,43 @@ import kotlinx.coroutines.flow.flow
 import java.lang.Exception
 import javax.inject.Inject
 
-class DetailRepository @Inject constructor(val api:ITunesService)  {
+class DetailRepository @Inject constructor(val api: ITunesService) {
 
-    suspend fun  lookup(id :Int): Flow<Any> = flow {
-        Log.e("Result","repo")
+    suspend fun lookup(id: Int): Flow<Any> = flow {
+        Log.e("Result", "repo")
         emit(LookupResponseResult.Loading)
         val response = try {
             api.lookup(id)
 
-        }catch (ex: Exception){
+        } catch (ex: Exception) {
             null
         }
-        when(response?.code()){
-            null->emit(LookupResponseResult.Failure)
-            200->{
-                val results= response.body()?.results?.get(0)
+        when (response?.code()) {
+            null -> emit(LookupResponseResult.Failure)
+            200 -> {
+                val results = response.body()?.results?.get(0)
                 emit(LookupResponseResult.Success(results!!))
             }
-            else->emit(LookupResponseResult.UnexpectedError)
+            else -> emit(LookupResponseResult.UnexpectedError)
         }
     }
 
-    suspend fun lookupSoftware(id:Int):Flow<Any> = flow{
-        Log.e("Result","repo")
+    suspend fun lookupSoftware(id: Int): Flow<Any> = flow {
+        Log.e("Result", "repo")
         emit(LookupSoftwareResponseResult.Loading)
         val response = try {
             api.lookupSoftware(id)
 
-        }catch (ex: Exception){
+        } catch (ex: Exception) {
             null
         }
-        when(response?.code()){
-            null->emit(LookupSoftwareResponseResult.Failure)
-            200->{
-                val results= response.body()?.results?.get(0)
+        when (response?.code()) {
+            null -> emit(LookupSoftwareResponseResult.Failure)
+            200 -> {
+                val results = response.body()?.results?.get(0)
                 emit(LookupSoftwareResponseResult.Success(results!!))
             }
-            else->emit(LookupSoftwareResponseResult.Failure)
+            else -> emit(LookupSoftwareResponseResult.Failure)
         }
     }
 
@@ -60,20 +60,19 @@ class DetailRepository @Inject constructor(val api:ITunesService)  {
         object Loading : LookupResponseResult()
     }*/
 
-    sealed class LookupResponseResult{
+    sealed class LookupResponseResult {
         class Success(val data: Result) : LookupResponseResult()
         object UnexpectedError : LookupResponseResult()
         object Loading : LookupResponseResult()
-        object  Failure : LookupResponseResult()
+        object Failure : LookupResponseResult()
     }
 
-    sealed class LookupSoftwareResponseResult{
+    sealed class LookupSoftwareResponseResult {
         class Success(val data: AppResult) : LookupSoftwareResponseResult()
         object UnexpectedError : LookupSoftwareResponseResult()
         object Loading : LookupSoftwareResponseResult()
-        object  Failure : LookupSoftwareResponseResult()
+        object Failure : LookupSoftwareResponseResult()
     }
-
 
 
 }
