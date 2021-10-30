@@ -14,11 +14,6 @@ interface ITunesService {
     suspend fun search(@Query("term") term:String,
                        @Query("entity") entity:String?,@Query("offset") offset:Int,@Query("limit") limit :Int): Response<SearchResponse<Result>>
 
-    @GET("search")
-    suspend fun searchApps(@Query("term") term:String,
-                           @Query("entity") entity: String = EntityType.APPS.value.enumValue, @Query("offset") offset:Int, @Query("limit") limit :Int): Response<SearchResponse<AppResult>>
-
-
     @GET("lookup")
     suspend fun lookup(@Query("id") id:Int) :Response<SearchResponse<Result>>
 

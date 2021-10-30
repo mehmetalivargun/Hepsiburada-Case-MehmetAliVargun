@@ -8,4 +8,7 @@
     <string name="retry">Retry</string>
     <string name="search">Search</string>
     <string name="install">Install</string>
+    <string name="trailer">Trailer</string>
+    <string name="description">Description</string>
+    <string name="network_error_occured">Network Error Occured</string>
 </resources>

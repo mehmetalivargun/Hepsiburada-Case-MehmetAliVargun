@@ -1,5 +1,7 @@
 package com.mehmetalivargun.hepsiburadacase.data.model
 
+import com.google.gson.annotations.SerializedName
+
 data class Result(
     val artistId: Int?,
     val artistName: String?,
@@ -28,7 +30,6 @@ data class Result(
     val kind: String?,
     val longDescription: String?,
     val previewUrl: String?,
-    val price:Double?,
     val primaryGenreName: String?,
     val releaseDate: String?,
     val shortDescription: String?,
@@ -40,6 +41,7 @@ data class Result(
     val trackId: Int?,
     val trackName: String?,
     val trackNumber: Int?,
+    @SerializedName(value = "trackPrice", alternate = ["price"])
     val trackPrice: Double?,
     val trackRentalPrice: Double?,
     val trackTimeMillis: Int?,

@@ -1,4 +1,4 @@
-package com.mehmetalivargun.hepsiburadacase.ui.detail
+package com.mehmetalivargun.hepsiburadacase.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -28,6 +28,7 @@ class ScreenShotAdapter(private val screenShots: List<String>) :
     }
 
     override fun getItemCount() = screenShots.size
+
 
 }
 

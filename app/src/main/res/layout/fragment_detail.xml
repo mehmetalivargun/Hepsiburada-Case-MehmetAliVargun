@@ -1,10 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/loading"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </ProgressBar>
 
+    <LinearLayout
+        android:id="@+id/errorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:gravity="center" >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/main_text"
+            android:textSize="32sp"
+            android:text="@string/network_error_occured">
+        </TextView>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/networkErrorAnimation"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/no_internet">
+    </com.airbnb.lottie.LottieAnimationView>
+        <Button
+            android:id="@+id/retry_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/retry">
+        </Button>
+    </LinearLayout>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/allViewLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="100dp"
@@ -29,28 +73,35 @@
         android:id="@+id/songName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:fontFamily="@font/poppins_medium"
         android:maxLines="2"
-        android:padding="8dp"
         android:textAlignment="center"
-        android:textSize="30sp"
+        android:textColor="@color/main_text"
+        android:textSize="20sp"
+        android:padding="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cardView"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cardView"
         tools:text="Allame">
 
     </TextView>
 
     <TextView
         android:id="@+id/collectionName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:autoSizeMaxTextSize="16sp"
+        android:autoSizeMinTextSize="8sp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:maxLines="3"
         android:textAlignment="center"
-        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/releaseDate"
         app:layout_constraintEnd_toEndOf="@+id/songName"
-        app:layout_constraintStart_toStartOf="@+id/songName"
+        app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintTop_toBottomOf="@+id/songName"
-        tools:text="Collection:87">
+        tools:text="Furious 7 (Original Motion Picture Soundtrack)">
 
     </TextView>
 
@@ -58,8 +109,10 @@
         android:id="@+id/releaseDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/openTrackviewUrl"
         app:layout_constraintEnd_toEndOf="@+id/songName"
         app:layout_constraintStart_toStartOf="@+id/songName"
         app:layout_constraintTop_toBottomOf="@+id/collectionName"
@@ -72,11 +125,12 @@
         android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
         android:maxLines="4"
-        android:padding="10dp"
+        android:padding="8dp"
+        android:textSize="16sp"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/screenShotRV"
-        app:layout_constraintTop_toBottomOf="@+id/openTrackviewUrl"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTitleTV"
         tools:text="Burner is the market-leading private phone number app — a second line for calling, texting, and picture messaging in everyday situations. Did you know that your personal info is attached to your phone number and easily searchable online? Every time you give out your real phone number, you risk exposing your personal information. Only give your number to people you trust. For everyone else, there's Burner.\n\nHOW BURNER WORKS\nWith Burner, you're in control of your personal information. No one can find your real number from your Burner number. We intercept calls on your Burner and route them to your cell phone so no one can see your real number. Since you can call, text, and manage your contacts from within the app, you don't have to carry a second device.\n\nUse Burner for everyday situations. Create a disposable phone number for dating, salespeople, deliveries, shopping online or selling items on Craigslist. You can use it as a longterm second phone number for your business or side projects. Integrations with Dropbox, Google Drive, and Slack allow you to archive messages and voicemails, and communicate with your team. Create multiple numbers, keep them as long as you want, or burn them anytime. Share your Burner with anyone and everyone, or keep your new number secret for anonymous texting. No hassles, no contracts." />
 
 
@@ -84,19 +138,39 @@
         android:id="@+id/openTrackviewUrl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:layout_margin="8dp"
+        android:fontFamily="@font/poppins_medium"
         android:text="@string/install"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/releaseDate" />
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+    <TextView
+        android:id="@+id/descriptionTitleTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/poppins_medium"
+        android:padding="4dp"
+        android:text="@string/description"
+        android:textAlignment="center"
+        android:textColor="@color/main_text"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@id/openTrackviewUrl" />
+
+    <View
+        android:id="@+id/dividerDescription"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/descriptionTitleTV" />
 
     <com.wnafee.vector.MorphButton
         android:id="@+id/playPreview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="28dp"
         android:background="@color/colorPrimary"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -106,6 +180,25 @@
         app:vc_startDrawable="@drawable/baseline_play_arrow_24"
         tools:ignore="MissingConstraints" />
 
+    <TextView
+        android:id="@+id/trailerTitleTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:padding="4dp"
+        android:text="@string/trailer"
+        android:textAlignment="center"
+        android:textColor="@color/main_text"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@id/description" />
+
+
+    <View
+        android:id="@+id/dividerTrailer"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/trailerTitleTV" />
 
     <VideoView
         android:id="@+id/videoView"
@@ -115,7 +208,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description" />
+        app:layout_constraintTop_toBottomOf="@+id/trailerTitleTV" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/screenShotRV"
@@ -124,11 +217,10 @@
         android:orientation="horizontal"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/playPreview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/releaseDate"
+        app:layout_constraintTop_toBottomOf="@+id/trailerTitleTV"
         tools:listitem="@layout/item_screen_shot" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

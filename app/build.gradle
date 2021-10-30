@@ -6,6 +6,7 @@ plugins {
     id "androidx.navigation.safeargs.kotlin"
 }
 
+
 android {
     compileSdk 31
 
@@ -20,7 +21,6 @@ android {
     }
     buildFeatures {
         viewBinding true
-
     }
 
     buildTypes {
@@ -73,6 +73,7 @@ dependencies {
     implementation "androidx.paging:paging-runtime-ktx:3.0.1"
     implementation 'com.wnafee:vector-compat:1.0.5'
 
+    implementation 'com.airbnb.android:lottie:4.1.0'
 
 
 }
