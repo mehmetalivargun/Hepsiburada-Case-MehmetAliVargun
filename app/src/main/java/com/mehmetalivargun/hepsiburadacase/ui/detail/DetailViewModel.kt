@@ -2,7 +2,6 @@ package com.mehmetalivargun.hepsiburadacase.ui.detail
 
 import android.media.AudioAttributes
 import android.media.MediaPlayer
-import android.util.Log
 import androidx.lifecycle.*
 import com.mehmetalivargun.hepsiburadacase.data.model.AppResult
 import com.mehmetalivargun.hepsiburadacase.data.model.Result
@@ -18,7 +17,6 @@ class DetailViewModel @Inject constructor(
     private val repository: DetailRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-
     private val _state: MutableLiveData<DetailState> = MutableLiveData()
     val state: LiveData<DetailState> = _state
     private var isPlaying: Boolean = false
@@ -33,7 +31,6 @@ class DetailViewModel @Inject constructor(
     init {
         _state.value = DetailState.Loading
         initialData()
-
     }
 
     fun initialData() {
@@ -73,12 +70,11 @@ class DetailViewModel @Inject constructor(
             mediaPlayer.stop()
         }
         mediaPlayer.release()
-
     }
 
     fun pauseAudio() = mediaPlayer.pause()
 
-    fun resumeAudio()= mediaPlayer.start()
+    fun resumeAudio() = mediaPlayer.start()
 
     private fun onLoading() {
         _state.value = DetailState.Loading
@@ -88,12 +84,10 @@ class DetailViewModel @Inject constructor(
         _state.value = DetailState.Failure
     }
 
-
     private fun lookup(id: Int) = viewModelScope.launch {
         repository.lookup(id).collect {
-            Log.e("Result", "lookUp")
             when (it) {
-                is DetailRepository.LookupResponseResult.Success.SuccessResult -> onSuccesResult(it.result)
+                is DetailRepository.LookupResponseResult.Success.SuccessResult -> onSuccessResult(it.result)
                 DetailRepository.LookupResponseResult.Failure -> onFail()
                 DetailRepository.LookupResponseResult.Loading -> onLoading()
 
@@ -104,7 +98,7 @@ class DetailViewModel @Inject constructor(
     private fun lookupSoftware(id: Int) = viewModelScope.launch {
         repository.lookupSoftware(id).collect {
             when (it) {
-                is DetailRepository.LookupResponseResult.Success.SuccessAppResult -> onSuccesAppResult(
+                is DetailRepository.LookupResponseResult.Success.SuccessAppResult -> onSuccessAppResult(
                     it.appResult
                 )
                 DetailRepository.LookupResponseResult.Failure -> onFail()
@@ -113,14 +107,14 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    private fun onSuccesAppResult(data: AppResult) {
+    private fun onSuccessAppResult(data: AppResult) {
         _softwareResult.value = data
-        _state.value = DetailState.Succes
+        _state.value = DetailState.Success
     }
 
-    private fun onSuccesResult(data: Result) {
+    private fun onSuccessResult(data: Result) {
         _result.value = data
-        _state.value = DetailState.Succes
+        _state.value = DetailState.Success
     }
 
 

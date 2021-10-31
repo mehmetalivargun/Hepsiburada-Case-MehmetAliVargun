@@ -10,5 +10,10 @@
     <string name="install">Install</string>
     <string name="trailer">Trailer</string>
     <string name="description">Description</string>
+    <string name="button_buy_music">Buy MUSIC</string>
+    <string name="button_read_book">Read Book</string>
+    <string name="button_buy_movie">Buy MOVIE</string>
+    <string name="button_install">INSTALL</string>
+    <string name="screenshots">Screenshots</string>
     <string name="network_error_occured">Network Error Occured</string>
 </resources>

@@ -1,9 +1,7 @@
 package com.mehmetalivargun.hepsiburadacase.extentions
 
-import android.content.Context
 import android.widget.ImageView
 import com.bumptech.glide.Glide
-import com.mehmetalivargun.hepsiburadacase.R
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -12,7 +10,7 @@ fun String?.getDate(): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
         val parsedDate = sdf.parse(this)
         val systemSdp = SimpleDateFormat("d MMMM yyyy", Locale.ENGLISH)
-        return systemSdp.format(parsedDate)
+        return systemSdp.format(parsedDate!!)
     }
 
     return ""

@@ -19,6 +19,11 @@ import com.mehmetalivargun.hepsiburadacase.util.constants.DetailState
 import com.mehmetalivargun.hepsiburadacase.util.constants.KindType
 import com.wnafee.vector.MorphButton
 import dagger.hilt.android.AndroidEntryPoint
+import android.app.Activity
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
+import com.mehmetalivargun.hepsiburadacase.R
+
 
 @AndroidEntryPoint
 class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding::inflate) {
@@ -29,6 +34,13 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        hideKeyboard(requireActivity())
+        stateObserver()
+        bindForKind()
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    private fun stateObserver() {
         viewModel.state.observe(viewLifecycleOwner, {
             when (it) {
                 DetailState.Loading -> {
@@ -43,20 +55,30 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                     binding.errorLayout.visibility = View.VISIBLE
                     bindingForError()
                 }
-                DetailState.Succes -> {
+                DetailState.Success -> {
                     binding.apply {
                         allViewLayout.visibility = View.VISIBLE
                         errorLayout.visibility = View.GONE
                         loading.visibility = View.GONE
                     }
                 }
+                null -> {
+                }
             }
         })
-
-
-        bindForKind()
-        return super.onCreateView(inflater, container, savedInstanceState)
     }
+
+    //hide keyboard if its necessary
+    fun hideKeyboard(activity: Activity) {
+        val imm: InputMethodManager =
+            activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        var view = activity.currentFocus
+        if (view == null) {
+            view = View(activity)
+        }
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
 
     private fun bindingForError() {
         binding.retryButton.setOnClickListener {
@@ -74,6 +96,13 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
         }
     }
 
+    private fun openTrackviewUrl(url: String?) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = url?.toUri()
+        startActivity(intent)
+
+    }
+
     private fun bindForMusic() {
         viewModel.result.observe(viewLifecycleOwner, { data ->
             binding.apply {
@@ -81,17 +110,26 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                 songName.text = data.trackName
                 collectionName.text = data.collectionName
                 releaseDate.text = data.releaseDate.getDate()
-                openTrackviewUrl.text = "Buy MUSIC"
-                trailerTitleTV.visibility=View.GONE
-                descriptionTitleTV.visibility=View.GONE
-                dividerDescription.visibility=View.GONE
-                dividerTrailer.visibility=View.GONE
+                openTrackviewUrl.text = getString(R.string.button_buy_music)
+                trailerTitleTV.visibility = View.GONE
+                descriptionTitleTV.visibility = View.GONE
+                dividerDescription.visibility = View.GONE
+                dividerTrailer.visibility = View.GONE
+                openTrackviewUrl.setOnClickListener {
+                    openTrackviewUrl(data.trackViewUrl)
+                }
                 playPreview.setOnStateChangedListener { changedTo, _ ->
                     when (changedTo) {
                         MorphButton.MorphState.END -> {
+                            Toast.makeText(
+                                requireContext(),
+                                "Playing Audio Preview",
+                                Toast.LENGTH_SHORT
+                            ).show()
                             data.previewUrl?.let { viewModel.playAudio(it) }
                         }
                         MorphButton.MorphState.START -> {
+                            Toast.makeText(requireContext(), "Stopped", Toast.LENGTH_SHORT).show()
                             viewModel.pauseAudio()
                         }
                         else -> {
@@ -113,13 +151,11 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                 description.text = data.longDescription
                 description.maxLines = 6
                 videoView.visibility = View.VISIBLE
-                openTrackviewUrl.text = "Buy Movie"
+                openTrackviewUrl.text = getString(R.string.button_buy_movie)
 
                 videoView.seekTo(1)
                 openTrackviewUrl.setOnClickListener {
-                    val intent = Intent(Intent.ACTION_VIEW)
-                    intent.data = data.trackViewUrl?.toUri()
-                    startActivity(intent)
+                    openTrackviewUrl(data.trackViewUrl)
                 }
                 var startPosition = videoView.currentPosition
                 playPreview.setOnStateChangedListener { changedTo, isAnimating ->
@@ -137,6 +173,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                             startPosition = videoView.currentPosition
                             videoView.pause()
                         }
+                        null->{}
                     }
                 }
             }
@@ -154,11 +191,10 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                 description.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18F)
                 trailerTitleTV.visibility = View.GONE
                 description.text = Html.fromHtml(data.description, 1)
-                openTrackviewUrl.text = "Read Book"
+                openTrackviewUrl.text = getString(R.string.button_read_book)
+                playPreview.visibility = View.GONE
                 openTrackviewUrl.setOnClickListener {
-                    val intent = Intent(Intent.ACTION_VIEW)
-                    intent.data = data.trackViewUrl?.toUri()
-                    startActivity(intent)
+                    openTrackviewUrl(data.trackViewUrl)
                 }
             }
         })
@@ -174,12 +210,10 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding
                 releaseDate.text = data.releaseDate.getDate()
                 description.text = data.description
                 screenShotRV.visibility = View.VISIBLE
-                trailerTitleTV.text = "Screenshots"
+                trailerTitleTV.text = getString(R.string.screenshots)
                 playPreview.visibility = View.GONE
                 openTrackviewUrl.setOnClickListener {
-                    val intent = Intent(Intent.ACTION_VIEW)
-                    intent.data = data.trackViewUrl?.toUri()
-                    startActivity(intent)
+                    openTrackviewUrl(data.trackViewUrl)
                 }
                 screenShotRV.adapter = data.screenshotUrls?.let { it1 ->
                     ScreenShotAdapter(

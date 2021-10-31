@@ -24,6 +24,4 @@ class SearchRepository @Inject constructor(private var api : ITunesService) {
             }
         ).liveData
     }
-
-
 }

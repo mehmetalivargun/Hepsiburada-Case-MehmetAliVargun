@@ -20,8 +20,4 @@ class SearchViewModel @Inject constructor(private val repository: SearchReposito
         _searchResults.value = result.value
         return result
     }
-
-
-
-
 }

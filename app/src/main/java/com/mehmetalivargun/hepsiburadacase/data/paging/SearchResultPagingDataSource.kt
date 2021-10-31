@@ -16,7 +16,6 @@ class SearchResultPagingDataSource(private val service : ITunesService , private
         // using offset and limit parameters for pagination
         val position = params.key ?: INITIAL_LOAD_SIZE
         val offset = if (params.key != null) ((position-1 ) * NETWORK_PAGE_SIZE) + 1 else INITIAL_LOAD_SIZE
-
         return try {
             val jsonResponse = service.search(term = term,entity = entity,offset = offset,limit = params.loadSize).body()?.results
             val mappedResponse = jsonResponse.toSearchResultItemResponse()
@@ -26,7 +25,6 @@ class SearchResultPagingDataSource(private val service : ITunesService , private
                 // 3* PageSize initially loaded so dont load same data again
                 position + (params.loadSize / NETWORK_PAGE_SIZE)
             }
-            Log.e("offsetNext",next.toString())
             LoadResult.Page(
                 data = mappedResponse,
                 prevKey = null,

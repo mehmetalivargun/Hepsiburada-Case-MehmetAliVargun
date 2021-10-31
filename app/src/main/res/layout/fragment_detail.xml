@@ -128,7 +128,7 @@
         android:fontFamily="@font/poppins_medium"
         android:maxLines="4"
         android:padding="8dp"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textAlignment="center"
         app:layout_constraintTop_toBottomOf="@+id/descriptionTitleTV"
         tools:text="Burner is the market-leading private phone number app — a second line for calling, texting, and picture messaging in everyday situations. Did you know that your personal info is attached to your phone number and easily searchable online? Every time you give out your real phone number, you risk exposing your personal information. Only give your number to people you trust. For everyone else, there's Burner.\n\nHOW BURNER WORKS\nWith Burner, you're in control of your personal information. No one can find your real number from your Burner number. We intercept calls on your Burner and route them to your cell phone so no one can see your real number. Since you can call, text, and manage your contacts from within the app, you don't have to carry a second device.\n\nUse Burner for everyday situations. Create a disposable phone number for dating, salespeople, deliveries, shopping online or selling items on Craigslist. You can use it as a longterm second phone number for your business or side projects. Integrations with Dropbox, Google Drive, and Slack allow you to archive messages and voicemails, and communicate with your team. Create multiple numbers, keep them as long as you want, or burn them anytime. Share your Burner with anyone and everyone, or keep your new number secret for anonymous texting. No hassles, no contracts." />
@@ -149,14 +149,13 @@
         android:id="@+id/descriptionTitleTV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:fontFamily="@font/poppins_medium"
         android:padding="4dp"
         android:text="@string/description"
         android:textAlignment="center"
         android:textColor="@color/main_text"
-        android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@id/openTrackviewUrl" />
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/openTrackviewUrl" />
 
     <View
         android:id="@+id/dividerDescription"
@@ -189,7 +188,7 @@
         android:text="@string/trailer"
         android:textAlignment="center"
         android:textColor="@color/main_text"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@id/description" />
 
 
@@ -203,7 +202,7 @@
     <VideoView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="200dp"
         android:layout_marginTop="20dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"

@@ -3,9 +3,9 @@ package com.mehmetalivargun.hepsiburadacase.ui.search
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 import android.widget.RadioButton
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
@@ -23,6 +23,18 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     private val viewModel: SearchViewModel by viewModels()
     private var searchAdapter: SearchAdapter = SearchAdapter(searchResultDiffUtil)
 
+    override fun FragmentSearchBinding.initialize() {
+        pagingErrorHandling()
+        setAdapterClickListener()
+        binding.filterRadioGroup.setOnCheckedChangeListener { radioGroup, i ->
+            val selected = radioGroup.findViewById<RadioButton>(i).text
+            selectedEntityType = EntityType.getEntitiyBySelected(selected.toString())!!
+            doSearch()
+        }
+    }
+
+
+    //appbar search textchange listener
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.search_menu, menu)
         val searchItem: MenuItem = menu.findItem(R.id.menu_search)
@@ -60,37 +72,37 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         }
     }
 
-    override fun FragmentSearchBinding.initialize() {
-        setupAdapters()
-        setAdapterClickListener()
-        binding.filterRadioGroup.setOnCheckedChangeListener { radioGroup, i ->
-            val selected = radioGroup.findViewById<RadioButton>(i).text
-            selectedEntityType = EntityType.getEntitiyBySelected(selected.toString())!!
-            doSearch()
-        }
-    }
 
-
-    private fun setupAdapters() {
+    private fun pagingErrorHandling() {
         searchAdapter.addLoadStateListener { loadState ->
-            if (loadState.refresh is LoadState.Loading) {
-                binding.apply {
-                    loadingBar.visibility = View.VISIBLE
-                    resultsRV.visibility = View.GONE
-                }
-            } else {
-                binding.apply {
-                    loadingBar.visibility = View.GONE
-                    resultsRV.visibility = View.VISIBLE
+            binding.apply {
+                if (loadState.refresh is LoadState.Loading) {
+                    loadingBar.isVisible = true
+                    resultsRV.isVisible = false
+                    searchNotFound.isVisible = false
+                    errorLayout.isVisible = false
+                } else if (loadState.source.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached && searchAdapter.itemCount < 1) {
+                    resultsRV.isVisible = false
+                    loadingBar.isVisible = false
+                    searchNotFound.isVisible = true
+                    errorLayout.isVisible = false
+                } else if (loadState.refresh is LoadState.Error) {
+                    resultsRV.isVisible = false
+                    loadingBar.isVisible = false
+                    searchNotFound.isVisible = false
+                    errorLayout.isVisible = true
+                } else {
+                    errorLayout.isVisible = false
+                    resultsRV.isVisible = true
+                    loadingBar.isVisible = false
+                    searchNotFound.isVisible = false
                 }
             }
 
-            val error = when {
-                loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
-                loadState.append is LoadState.Error -> loadState.append as LoadState.Error
-                loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
-                else -> null
-            }
+        }
+
+        binding.retryButton.setOnClickListener {
+            doSearch()
         }
     }
 

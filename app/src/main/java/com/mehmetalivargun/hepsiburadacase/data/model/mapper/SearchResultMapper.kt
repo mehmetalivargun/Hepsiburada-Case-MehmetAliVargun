@@ -7,7 +7,6 @@ fun List<Result>?.toSearchResultItemResponse() = this?.map {
     it.toSearchResultItemResponse()
 }
 
-
 private fun Result.toSearchResultItemResponse() = SearchItem(
     trackId = trackId!!,
     trackName = trackName,
