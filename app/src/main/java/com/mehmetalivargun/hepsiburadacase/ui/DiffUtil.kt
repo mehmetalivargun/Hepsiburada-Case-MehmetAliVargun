@@ -6,7 +6,7 @@ import com.mehmetalivargun.hepsiburadacase.data.model.SearchItem
 object DiffUtil {
    val searchResultDiffUtil:DiffUtil.ItemCallback<SearchItem> =object : DiffUtil.ItemCallback<SearchItem>() {
         override fun areItemsTheSame(oldItem: SearchItem, newItem: SearchItem) =
-            oldItem.artworkUrl100 == newItem.artworkUrl100
+            oldItem.trackId == newItem.trackId
 
         override fun areContentsTheSame(oldItem: SearchItem, newItem: SearchItem) =
             oldItem == newItem
